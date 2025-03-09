@@ -7,6 +7,7 @@ import adminRoute from "./routes/adminAuthRoute.js";
 import adminHandleRoute from "./routes/adminHandleRoute.js";
 import schoolRoute from "./routes/schoolAuthRoute.js";
 import teacherRoute from "./routes/teacherAuthRoute.js";
+import schoolHandleRoute from "./routes/schoolHandleRoute.js";
 
 dotenv.config();
 
@@ -14,11 +15,15 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 const prisma = new PrismaClient();
-
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(cookieParser());
-app.use(express.json()); // Parses incoming JSON requests
-app.use(express.urlencoded({ extended: true })); // Parses URL-encoded requests
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -27,6 +32,7 @@ app.get("/", (req, res) => {
 app.use("/api", adminRoute);
 app.use("/api", schoolRoute);
 app.use("/api", teacherRoute);
+app.use("/api", schoolHandleRoute);
 app.use("/api", adminHandleRoute);
 
 // Check Prisma Database Connection

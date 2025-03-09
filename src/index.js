@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
 import adminRoute from "./routes/adminAuthRoute.js";
+import adminHandleRoute from "./routes/adminHandleRoute.js";
 import schoolRoute from "./routes/schoolAuthRoute.js";
 import teacherRoute from "./routes/teacherAuthRoute.js";
 import schoolHandleRoute from "./routes/schoolHandleRoute.js";
@@ -32,6 +33,7 @@ app.use("/api", adminRoute);
 app.use("/api", schoolRoute);
 app.use("/api", teacherRoute);
 app.use("/api", schoolHandleRoute);
+app.use("/api", adminHandleRoute);
 
 // Check Prisma Database Connection
 async function checkDatabaseConnection() {

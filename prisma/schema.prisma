@@ -26,19 +26,21 @@ model Admin {
 }
 
 model School {
-  id          Int       @id @default(autoincrement())
-  fullName    String    @default("Unknown")
-  email       String    @unique
+  id          Int          @id @default(autoincrement())
+  fullName    String       @default("Unknown")
+  email       String       @unique
   password    String
-  code        String    @unique @default("SC000")
-  address     String    @default("Not Provided")
-  contact     BigInt    @default(0)
-  principal   String    @default("Unknown")
-  established Int       @default(2000)
-  role        Role      @default(SCHOOL)
+  code        String       @unique @default("SC000")
+  address     String       @default("Not Provided")
+  contact     BigInt       @default(0)
+  principal   String       @default("Unknown")
+  established Int          @default(2000)
+  role        Role         @default(SCHOOL)
   teachers    Teacher[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  // departments Department[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  Department  Department[]
 }
 
 model Teacher {
@@ -55,4 +57,16 @@ model Teacher {
   school       School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+}
+
+model Department {
+  id             Int      @id @default(autoincrement())
+  departmentName String
+  hOD            String
+  faculty_count  Int
+  description    String
+  schoolId       Int
+  school         School   @relation(fields: [schoolId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }

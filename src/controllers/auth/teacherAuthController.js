@@ -45,6 +45,7 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
+    console.log(req.body);
     const { email, password } = req.body;
 
     const user = await prisma.admin.findUnique({

@@ -53,3 +53,13 @@ export const addAdmin = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getAllUsers = async(req,res)=>{
+  const {page , limit} = req.query;
+  console.log(req.user);
+    // Check if user already exists
+    // const existingUser = await prisma.admin.findUnique({
+    //   where: { email },
+    // });
+  res.status(200).json({success:true,data:req.query});
+}

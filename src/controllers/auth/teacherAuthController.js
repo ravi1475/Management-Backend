@@ -47,6 +47,8 @@ export const login = async (req, res) => {
   try {
     console.log(req.body);
     const { email, password } = req.body;
+    console.log(req.body);
+    console.log("Hi");
 
     const user = await prisma.admin.findUnique({
       where: { email },
@@ -72,7 +74,12 @@ export const login = async (req, res) => {
       maxAge: 60 * 60 * 1000,
     });
 
-    res.status(200).json({ success: true, message: "Login successful!" });
+    res.status(200).json({
+      success: true,
+      data: {
+        token,
+      },
+    });
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ success: false, message: "Internal server error" });

@@ -54,12 +54,28 @@ export const addAdmin = async (req, res) => {
   }
 };
 
-export const getAllUsers = async(req,res)=>{
-  const {page , limit} = req.query;
-  console.log(req.user);
-    // Check if user already exists
-    // const existingUser = await prisma.admin.findUnique({
-    //   where: { email },
-    // });
-  res.status(200).json({success:true,data:req.query});
-}
+export const getAllUsers = async (req, res) => {
+  const { page, limit } = req.query;
+  const email ="ravi.sinhmar28@gmail.com";
+
+  try {
+    // Convert page and limit to numbers
+    const pageNumber = parseInt(page) || 1;
+    const limitNumber = parseInt(limit) || 10;
+
+    // Fetch users with pagination
+    const users = await prisma.admin.findMany({
+      where: { email }, // Filter by email
+      skip: (pageNumber - 1) * limitNumber, // Calculate the offset
+      take: limitNumber, // Number of users to fetch
+    });
+
+    console.log("Fetched users:", users);
+
+    // Send the response with the fetched users
+    res.status(200).json({ success: true, data: users });
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ success: false, message: "Failed to fetch users" });
+  }
+};
